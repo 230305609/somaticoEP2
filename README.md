@@ -59,6 +59,13 @@ BWA para mapeamento dos arquivos FASTQ
 brew install bwa 
 ```
 
+Arquivo no formato FASTA do genoma humano hg38
+- Diretório Download UCSC hg38: https://hgdownload.soe.ucsc.edu/goldenPath/hg38/chromosomes/
+-- chr9.fa.gz: https://hgdownload.soe.ucsc.edu/goldenPath/hg38/chromosomes/chr9.fa.gz
+```
+wget -c https://hgdownload.soe.ucsc.edu/goldenPath/hg38/chromosomes/chr9.fa.gz
+```
+
 BWA index do arquivo chr9.fa.gz
 
 ```
