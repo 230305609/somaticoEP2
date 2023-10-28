@@ -130,7 +130,11 @@ wget -c https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr9.fa.gz
 # Gerando BED do arquivo BAM
 ```bash
 bedtools bamtobed -i WP312_sorted_rmdup_F4.bam > WP312_sorted_rmdup.bed
+```
+```bash
 bedtools merge -i WP312_sorted_rmdup.bed > WP312_sorted_rmdup_merged.bed
+```
+```bash
 bedtools sort -i WP312_sorted_rmdup_merged.bed > WP312_sorted_rmdup_merged_sorted.bed
 ```
 
