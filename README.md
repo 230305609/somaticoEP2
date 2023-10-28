@@ -127,10 +127,39 @@ wget -c https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr9.fa.gz
 
 ---
 
+# Gerando BED do arquivo BAM
+```bash
+bedtools bamtobed -i WP312_sorted_rmdup_F4.bam > WP312_sorted_rmdup.bed
+bedtools merge -i WP312_sorted_rmdup.bed > WP312_sorted_rmdup_merged.bed
+bedtools sort -i WP312_sorted_rmdup_merged.bed > WP312_sorted_rmdup_merged_sorted.bed
+```
+
+# Cobertura Média
+```bash
+bedtools coverage -a WP312_sorted_rmdup_merged_sorted.bed \
+-b WP312_sorted_rmdup_F4.bam -mean \
+> WP312_coverageBed.bed
+```
+
+# Filtro por total de reads >=20
+```bash
+cat WP312_coverageBed.bed | \
+awk -F "\t" '{if($4>=20){print}}' \
+> WP312_coverageBed20x.bed
+```
+
 # Adicionando chr nos VCFs do Gnomad e PoN
 
 O arquivo `af-only-gnomad.raw.sites.vcf` (do bucket somatic-b37) não tem o `chr`na frente do nome do cromossomo. Precisamos adicionar para não gerar conflito de contigs de referência na hora de executar o GATK.
 
+Download
+```bash
+wget -c https://github.com/broadinstitute/gatk/releases/download/4.2.2.0/gatk-4.2.2.0.zip
+```
+Descompactar
+```bash
+unzip gatk-4.2.2.0.zip
+```
 ```bash
 grep "\#" af-only-gnomad.raw.sites.vcf > af-only-gnomad.raw.sites.chr.vcf
 grep  "^9" af-only-gnomad.raw.sites.vcf |  awk '{print("chr"$0)}' >> af-only-gnomad.raw.sites.chr.vcf
